@@ -1,5 +1,5 @@
 from mdp import fastica
-from scikits.audiolab import flacread, flacwrite
+#from scikits.audiolab import flacread, flacwrite
 from numpy import abs, max
 
 # Load in the stereo file
