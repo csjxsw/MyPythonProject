@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 #FastICA from ICA book, table 8.4
 
-import random
-import math
+
 import matplotlib.pyplot as plt
 from numpy import *
 
 n_components = 2
 
 def f1(x, period = 4):
-    return 0.5*(x-math.floor(x/period)*period)
+    return 0.5*(x - math.floor(x / period) * period)
 
 def create_data():
     #data number
