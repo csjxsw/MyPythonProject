@@ -2,10 +2,15 @@
 #FastICA from ICA book, table 8.4
 
 
+import random
+import math
+
 import matplotlib.pyplot as plt
 from numpy import *
 
 n_components = 2
+
+print 'n_components =', n_components
 
 def f1(x, period = 4):
     return 0.5*(x - math.floor(x / period) * period)
@@ -16,9 +21,9 @@ def create_data():
     #data time
     T = [0.1*xi for xi in range(0, n)]
     #source
-    S = array([[sin(xi)  for xi in T], [f1(xi) for xi in T]], float32)
+    S = array([[sin(xi)  for xi in T], [f1(xi) for xi in T]], float)
     #mix matrix
-    A = array([[0.8, 0.2], [-0.3, -0.7]], float32)
+    A = array([[0.8, 0.2], [-0.3, -0.7]], float)
     return T, S, dot(A, S)
 
 def whiten(X):
@@ -28,7 +33,7 @@ def whiten(X):
     #whiten
     A = dot(X, X.transpose())
     D , E = linalg.eig(A)
-    D2 = linalg.inv(array([[D[0], 0.0], [0.0, D[1]]], float32))
+    D2 = linalg.inv(array([[D[0], 0.0], [0.0, D[1]]], float))
     D2[0,0] = sqrt(D2[0,0]); D2[1,1] = sqrt(D2[1,1])
     V = dot(D2, E.transpose())
     return dot(V, X), V
@@ -47,7 +52,7 @@ def do_fastica(X):
     #black magic
     X *= sqrt(X.shape[1])
     #create w
-    W = ones((n,n), float32)
+    W = ones((n,n), float)
     for i in range(n):
         for j in range(i):
             W[i,j] = random.random()
