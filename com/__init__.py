@@ -8,3 +8,6 @@ for key in dic:
 print dic.keys()
 print dic.values()
 print dic.items()
+
+d = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
+print (d['Michael'])
