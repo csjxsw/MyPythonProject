@@ -123,19 +123,27 @@ class Spider:
             detailURL = item[0]
             # 得到个人详情页面代码
             righturl = "http:"+detailURL
-            detailPage = self.getDetailPage(detailURL)
-            print detailPage
+            print "righturl=", righturl
+
+            detailPage = self.getDetailPage(righturl)
+            print "detailPage=", detailPage
             # 获取个人简介
             brief = self.getBrief(detailPage)
+
+            print "brief=", brief
+
             # 获取所有图片列表
             images = self.getAllImg(detailPage)
-            self.mkdir(item[2])
+
+            print "images=", images
+
+           # self.mkdir(item[2])
             # 保存个人简介
-            self.saveBrief(brief, item[2])
+           # self.saveBrief(brief, item[2])
             # 保存头像
-            self.saveIcon(item[1], item[2])
+           # self.saveIcon(item[1], item[2])
             # 保存图片
-            self.saveImgs(images, item[2])
+           # self.saveImgs(images, item[2])
 
     # 传入起止页码，获取MM图片
     def savePagesInfo(self, start, end):
