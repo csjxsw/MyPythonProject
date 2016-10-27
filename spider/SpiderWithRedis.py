@@ -42,7 +42,7 @@ def get_big_img_url():
             time.sleep(1)
             print url
         except:
-            print "请求求发送失败重试"
+            print "请求发送失败重试"
             time.sleep(10)
             continue
     return 0
