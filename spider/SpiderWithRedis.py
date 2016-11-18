@@ -12,7 +12,7 @@ def download(url):
     try:
         r = requests.get(url, headers=headers, timeout=50)
         name = int(time.time())
-        f = open('./pic/'+str(name)+'.jpg', 'wb')
+        f = open('./pictrue/'+str(name)+'.jpg', 'wb')
         f.write(r.content)
         f.close()
     except Exception,e:
@@ -50,7 +50,7 @@ def get_big_img_url():
 def push_redis_list(num):
     r = Redis()
     print r.keys('*')
-    for i in range(100):
+    for i in range(10):
         num = num+i;#抓取的取件仅在num+100--num+200之间
         url ='http://www.meizitu.com/a/'+ str(num) +'.html'
         img_url = requests.get(url, timeout=30)
@@ -70,7 +70,7 @@ def push_redis_list(num):
 if __name__ == '__main__':
     url = 'http://www.meizitu.com/a/list_1_'
     print "begin"
-    push_redis_list(4100)#开启则加任务队列.其中的值请限制在5400以内。不过是用于计算页码的
+    push_redis_list(4500)#开启则加任务队列.其中的值请限制在5400以内。不过是用于计算页码的
     get_big_img_url()#开启则运行爬取任务
     push_redis_list(4500)#开启则加任务队列.其中的值请限制在5400以内。不过是用于计算页码的
     get_big_img_url()#开启则运行爬取任务
@@ -80,3 +80,6 @@ if __name__ == '__main__':
     get_big_img_url()#开启则运行爬取任务
     push_redis_list(4200)#开启则加任务队列.其中的值请限制在5400以内。不过是用于计算页码的
     get_big_img_url()#开启则运行爬取任务
+
+
+
