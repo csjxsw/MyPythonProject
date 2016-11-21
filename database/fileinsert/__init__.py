@@ -3,6 +3,10 @@
 
 import psycopg2
 import csv
+import time
+
+# 格式化成2016-03-20 11:45:39形式
+startTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 conn = psycopg2.connect(database="dataService", user="cloud", password="cloud", host="10.254.201.218", port="5432")
 print "Opened database successfully"
@@ -58,4 +62,8 @@ if data.__len__() > 1:
 
 csvfile.close()
 conn.close()
+
+endTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+print "开始时间：", startTime
+print "结束时间：", endTime
 print "--------end-----------"
