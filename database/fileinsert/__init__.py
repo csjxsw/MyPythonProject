@@ -5,14 +5,13 @@ import psycopg2
 import csv
 import time
 
-# 格式化成2016-03-20 11:45:39形式
-startTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
 
 conn = psycopg2.connect(database="dataService", user="cloud", password="cloud", host="10.254.201.218", port="5432")
 print "Opened database successfully"
 
 cur = conn.cursor()
-csvfile = file('C:\\data\\201611mr-bj.csv', 'rb')
+csvfile = file('C:\\data\\kpi.csv', 'rb')
 reader = csv.reader(csvfile)
 count = 0
 data = []
@@ -43,7 +42,7 @@ for line in reader:
                 print "tempLen=", tempLen
         if count % 2000 == 0:
             #print "data=\n", data
-            cur.executemany("""INSERT INTO networkstructure201611(dt,province,cgi,city,vendor,earfcn,covertype,scenario,chinesename,height,totaltilt,bdlng,bdlat,iscore,rtotal,rweak,rweak2,rweak3,rcoverage,ototal,ovalid,ocoverage,oover,osover,affect,saffect,affectlist,saffectlist,utotal,ugood,dtotal,dgood) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",data)
+            cur.executemany("""INSERT INTO kpihourbyscenario(dt,province,city,earfcn,covertype,scenario,vendor,num,eu0317,eu0113,eu0202,eu0104,eu0538,eu0103,eu0226,eu0306,eu0505,eu0506) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",data)
             conn.commit()
             #print "Records created successfully"
             data = []
@@ -53,7 +52,7 @@ for line in reader:
 if data.__len__() > 1:
     print "data.size()=", data.__len__()
     cur.executemany(
-        """INSERT INTO networkstructure201611(dt,province,cgi,city,vendor,earfcn,covertype,scenario,chinesename,height,totaltilt,bdlng,bdlat,iscore,rtotal,rweak,rweak2,rweak3,rcoverage,ototal,ovalid,ocoverage,oover,osover,affect,saffect,affectlist,saffectlist,utotal,ugood,dtotal,dgood) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+          """INSERT INTO kpihourbyscenario(dt,province,city,earfcn,covertype,scenario,vendor,num,eu0317,eu0113,eu0202,eu0104,eu0538,eu0103,eu0226,eu0306,eu0505,eu0506) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
         data)
     conn.commit()
     print "Records created successfully"
@@ -64,6 +63,6 @@ csvfile.close()
 conn.close()
 
 endTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-print "开始时间：", startTime
-print "结束时间：", endTime
+
+
 print "--------end-----------"
