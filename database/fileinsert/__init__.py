@@ -1,69 +1,30 @@
 #!/usr/bin/env python
 # coding = utf-8
 
-import psycopg2
-import csv
-import time
+import sys,os
+from sys import argv
 
-# 格式化成2016-03-20 11:45:39形式
-startTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+print sys.path[0]
+print sys.argv
+print os.sep
 
-conn = psycopg2.connect(database="dataService", user="cloud", password="cloud", host="10.254.201.218", port="5432")
-print "Opened database successfully"
+str = "this is string example....wow!!! this is really string"
+replacestr = str.replace("is", "was")
+print "replacestr=",replacestr
 
-cur = conn.cursor()
-csvfile = file('C:\\data\\201611mr-bj.csv', 'rb')
-reader = csv.reader(csvfile)
-count = 0
-data = []
-titleNUm = 0
+str = 'abcdefd'
+substr = 'abc'
+res = str.find(substr)
+print "res=", res
+if res >= 0:
+    print "contains"
+else:
+    print "not contains"
 
-for line in reader:
-    count = count + 1
-    if line:
-        print count, ":", line
-        if count == 1:
-            tempStr = ','.join(line).decode('gbk')
-            titleNUm = tempStr.split(',').__len__()
-            print "titleNUm=", titleNUm
-        if count > 1:
-            tempStr = ','.join(line).decode('gbk')
-            #print "str=", tempStr
-            tempList = []
-            tempStrArray = tempStr.split(',')
-            tempLen = tempStrArray.__len__()
-            if tempLen == titleNUm:
-                for d in tempStrArray:
-                    if d == "" or d is None:
-                        tempList.append(0)
-                    else:
-                        tempList.append(d)
-                data.append(tempList)
-            else:
-                print "tempLen=", tempLen
-        if count % 2000 == 0:
-            #print "data=\n", data
-            cur.executemany("""INSERT INTO kpihourbyscenario(dt,province,city,earfcn,covertype,scenario,vendor,num,eu0317,eu0113,eu0202,eu0104,eu0538,eu0103,eu0226,eu0306,eu0505,eu0506) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",data)
-            conn.commit()
-            #print "Records created successfully"
-            data = []
-    else:
-        break
+i = 1
+for param in sys.argv:
+    path = sys.path[0]+os.sep+param
+    print i, path
+    i = i+1
 
-if data.__len__() > 1:
-    print "data.size()=", data.__len__()
-    cur.executemany(
-          """INSERT INTO kpihourbyscenario(dt,province,city,earfcn,covertype,scenario,vendor,num,eu0317,eu0113,eu0202,eu0104,eu0538,eu0103,eu0226,eu0306,eu0505,eu0506) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
-        data)
-    conn.commit()
-    print "Records created successfully"
-    print "data=\n", data
-    data = []
-
-csvfile.close()
-conn.close()
-
-endTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-print "开始时间：", startTime
-print "结束时间：", endTime
 print "--------end-----------"
