@@ -8,6 +8,6 @@ def getHtml(url):
     return html
 
 
-html = getHtml("http://tieba.baidu.com/p/2738151262")
+html = getHtml("http://bj.lianjia.com/ershoufang/pg2/")
 
 print html
