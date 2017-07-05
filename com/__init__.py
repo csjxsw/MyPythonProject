@@ -11,3 +11,11 @@ print dic.items()
 
 d = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
 print (d['Michael'])
+
+
+fruit = [234,234234,343.345,45.23]
+
+#增，删，改，查
+
+fruit.append(22.22)
+print fruit
